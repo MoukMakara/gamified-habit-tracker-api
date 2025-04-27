@@ -28,12 +28,12 @@ limit #{size};
     })
     List<HabitLog> findHabitLogsById(@Param("habitUUID")UUID id, Integer page, Integer size);
 
-@Select("""
-        INSERT INTO habit_logs(status, habit_id, xp_earned)
-        VALUES (#{habitrq.status}, #{habitrq.habitId}, #{xpEarned})
+    @Select("""
+        INSERT INTO habit_logs(status, habit_id, xp_earned, log_date)
+        VALUES (#{habitrq.status}, #{habitrq.habitId}, #{xpEarned}, NOW())
         RETURNING *
         """)
-@ResultMap("habitLogsMapper")
-HabitLog createHabitLog(@Param("habitrq") HabitLogRequest habitLog, Integer xpEarned);
+    @ResultMap("habitLogsMapper")
+    HabitLog createHabitLog(@Param("habitrq") HabitLogRequest habitLog, Integer xpEarned);
 
 }
